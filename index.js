@@ -14,13 +14,8 @@ app.use(session({
 }));
 
 app.get('/', function (req, res) {
-    if (req.session.page_views) {
-        req.session.page_views++;
-        res.send("You visited this page " + req.session.page_views + " times");
-    } else {
-        req.session.page_views = 1;
-        res.send("Welcome to this page for the first time!");
-    }
+    res.end("<a href=\"/survey/q1\">Start Survey</a>");
+
 });
 
 //both index.js and things.js should be in same directory
