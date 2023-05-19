@@ -1,5 +1,5 @@
 {
-  "name": "wap_survey",
+  "name": "wap_number_quiz_lab",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tahazayed/wap_survey.git"
+    "url": "git+https://github.com/tahazayed/wap_number_quiz_lab.git"
   },
   "author": "",
   "license": "MIT",

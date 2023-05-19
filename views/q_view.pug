@@ -1,0 +1,18 @@
+doctype html
+html
+   head
+      title The Number Quiz
+      link(rel="stylesheet" type="text/css" href="/site.css")
+   body
+      div.main
+        h1 The Number Quiz
+        p.score="Your current score is "+score+"."
+        p.guess Guess the next number of the sequence.
+        p.question=question
+        form(action = "/survey/q/"+id, method = "POST")
+          div
+            label(for = "answer") Your answer:
+            input(name = "answer" id = "answer"  type="number" min="0" step="1" required="required" autofocus)
+            br 
+            br      
+            button.winXP-wrap(type = "submit") Submit

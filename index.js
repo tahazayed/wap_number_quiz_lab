@@ -1,10 +1,11 @@
-var express = require('express');
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const bodyParser = require('body-parser');
 
-var routs = require('./routs.js');
+const routs = require('./routs.js');
 
-var app = express();
+const app = express();
 app.set('view engine', 'pug');
 app.set('views', './views');
 
@@ -14,6 +15,14 @@ app.use(session({
     saveUninitialized: true,
     resave: false
 }));
+
+// for parsing application/json
+app.use(bodyParser.json()); 
+
+// for parsing application/xwww-
+app.use(bodyParser.urlencoded({ extended: true })); 
+
+app.use(express.static('public'));
 
 app.get('/', function (req, res) {
     res.end("<a href=\"/survey/q/1\">Start Survey</a>");

@@ -1,9 +1,11 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const Questions = require('./questions.js');
 
 router.get('/q/:id', function (req, res) {
    const id = req.params.id;
    if (id == 1) {
+      req.session.score = 0;
       req.session.q1 = Number.NEGATIVE_INFINITY;
       req.session.q2 = Number.NEGATIVE_INFINITY;
       req.session.q3 = Number.NEGATIVE_INFINITY;
@@ -12,7 +14,12 @@ router.get('/q/:id', function (req, res) {
    }
 
    if (id >= 1 && id <= 5) {
-      res.render('q' + req.params.id + '_view');
+
+      res.render('q_view', {
+         score: req.session.score,
+         question: Questions.questions[(id - 1)],
+         id: req.params.id
+      });
    }
    else {
       res.writeHead(404, { 'Content-Type': 'text/html' });
@@ -20,18 +27,24 @@ router.get('/q/:id', function (req, res) {
    }
 
 });
-router.post('/q/id', function (req, res) {
+
+router.post('/q/:id', function (req, res) {
    const id = req.params.id;
    if (id >= 1 && id <= 4) {
       req.session['q' + id] = new Number(req.body.answer);
-      res.render('q' + (req.params.id + 1) + '_view');
+
+      console.log(req.session['q' + id]);
+      const newId = Number(id) + 1;
+      res.redirect("/survey/q/" + newId)
    }
    if (id == 5) {
       req.session.q5 = new Number(req.body.answer);
-      res.redirect('/result');
+      res.redirect('/survey/result');
    }
-
-   res.send('POST route on things.');
+   else {
+      res.writeHead(404, { 'Content-Type': 'text/html' });
+      return res.end("404 Not Found");
+   }
 });
 
 
@@ -56,5 +69,7 @@ router.get('/result', function (req, res) {
 
 
 });
+
+
 //export this router to use in our index.js
 module.exports = router;
