@@ -9,7 +9,7 @@ html
         p.score="Your current score is "+score+"."
         p.guess Guess the next number of the sequence.
         p.question=question
-        form(action = "/survey/q/"+id, method = "POST")
+        form(action = "/quiz/q/"+id, method = "POST")
           div
             label(for = "answer") Your answer:
             input(name = "answer" id = "answer"  type="number" min="0" step="1" required="required" autofocus)

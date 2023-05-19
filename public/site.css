@@ -34,13 +34,6 @@ input[type=number] {
     width: 100px;
 }
 
-a,
-a:hover,
-a:focus,
-a:active {
-    text-decoration: none;
-    color: #555;
-}
 
 .win7-btn {
     margin-right: 10px;

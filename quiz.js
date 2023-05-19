@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Questions = require('./questions.js');
+const questions = require('./questions.js');
 
 router.get('/q/:id', function (req, res) {
    const id = req.params.id;
@@ -35,11 +36,11 @@ router.post('/q/:id', function (req, res) {
 
       console.log(req.session['q' + id]);
       const newId = Number(id) + 1;
-      res.redirect("/survey/q/" + newId)
+      res.redirect("/quiz/q/" + newId)
    }
    if (id == 5) {
       req.session.q5 = new Number(req.body.answer);
-      res.redirect('/survey/result');
+      res.redirect('/quiz/result');
    }
    else {
       res.writeHead(404, { 'Content-Type': 'text/html' });
@@ -51,21 +52,19 @@ router.post('/q/:id', function (req, res) {
 router.get('/result', function (req, res) {
 
    let score = 0;
-   req.session.q1 = Number.NEGATIVE_INFINITY;
-   req.session.q2 = Number.NEGATIVE_INFINITY;
-   req.session.q3 = Number.NEGATIVE_INFINITY;
-   req.session.q4 = Number.NEGATIVE_INFINITY;
-   req.session.q5 = Number.NEGATIVE_INFINITY;
-   if (req.session.q1 == 9) {
-      score++;
+
+   for(let i=0;i<5;i++)
+   {
+      
+      if(req.session['q'+(i+1)]==questions.answers[i])
+      {
+         score++;
+      }
    }
 
-   if (req.session.q1 == 8) {
-      score++;
-   }
+  
 
-
-   res.render('result_view');
+   res.render('result_view',{score:score});
 
 
 });
