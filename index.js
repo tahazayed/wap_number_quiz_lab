@@ -10,6 +10,7 @@ app.set('view engine', 'pug');
 app.set('views', './views');
 
 app.use(cookieParser());
+
 app.use(session({
     secret: "Shh, its a secret!",
     saveUninitialized: true,
@@ -25,8 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
-    res.render("index_view");
-
+    return res.render("index_view");
 });
 
 //both index.js and quiz.js should be in same directory

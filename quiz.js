@@ -15,9 +15,8 @@ router.get('/q/:id', function (req, res) {
    }
 
    if (id >= 1 && id <= 5) {
-
-      res.render('q_view', {
-         score: req.session.score,
+      return  res.render('q_view', {
+         score: calculateScore(req),
          question: Questions.questions[(id - 1)],
          id: req.params.id
       });
@@ -33,14 +32,12 @@ router.post('/q/:id', function (req, res) {
    const id = req.params.id;
    if (id >= 1 && id <= 4) {
       req.session['q' + id] = new Number(req.body.answer);
-
-      console.log(req.session['q' + id]);
       const newId = Number(id) + 1;
-      res.redirect("/quiz/q/" + newId)
+      return res.redirect("/quiz/q/" + newId)
    }
    if (id == 5) {
       req.session.q5 = new Number(req.body.answer);
-      res.redirect('/quiz/result');
+      return res.redirect('/quiz/result');
    }
    else {
       res.writeHead(404, { 'Content-Type': 'text/html' });
@@ -50,25 +47,19 @@ router.post('/q/:id', function (req, res) {
 
 
 router.get('/result', function (req, res) {
+   res.render('result_view', { score: calculateScore(req) });
+});
 
+function calculateScore(req) {
    let score = 0;
 
-   for(let i=0;i<5;i++)
-   {
-      
-      if(req.session['q'+(i+1)]==questions.answers[i])
-      {
+   for (let i = 0; i < 5; i++) {
+
+      if (req.session['q' + (i + 1)] == questions.answers[i]) {
          score++;
       }
    }
-
-  
-
-   res.render('result_view',{score:score});
-
-
-});
-
-
+   return score;
+}
 //export this router to use in our index.js
 module.exports = router;
