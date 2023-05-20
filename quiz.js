@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Questions = require('./questions.js');
-const questions = require('./questions.js');
 
 router.get('/q/:id', function (req, res) {
    const id = req.params.id;
@@ -55,7 +54,7 @@ function calculateScore(req) {
 
    for (let i = 0; i < 5; i++) {
 
-      if (req.session['q' + (i + 1)] == questions.answers[i]) {
+      if (req.session['q' + (i + 1)] == Questions.answers[i]) {
          score++;
       }
    }
